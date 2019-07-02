@@ -1,4 +1,4 @@
-# elcome to the Data Engineering challenge.
+# Data Engineering challenge.
 
 As a data engineer, it's often the case that data lies distributed all over the ecosystem of the organization.
 In our case we get data from different APIs as well as Sales systems (like Salesforce) or other SAAS tools

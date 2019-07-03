@@ -3,12 +3,12 @@
 import tweepy
 import argparse
 import os
-import unittest
+print()
 
-CONSUMER_KEY = 't8bhToaY4LevkBjvS355A9pfu'
-CONSUMER_SECRET = '2315cTZYr7OQmoDytBWpuothCAakOYER7pE6fF3ZLUXeAC8rkz'
-ACCESS_TOKEN_KEY = '882165583911038976-XgiJxECv0cCsg2Ech6HmzPuzsD1zILp'
-ACCESS_TOKEN_SECRET = 'e9puaP5NBK0JWjEUXCE214yc2CXpkgC1zPMzmgDs5ZLc5'
+CONSUMER_KEY = os.environ['CONSUMER_KEY']
+CONSUMER_SECRET = os.environ['CONSUMER_SECRET']
+ACCESS_TOKEN_KEY = os.environ['ACCESS_TOKEN_KEY']
+ACCESS_TOKEN_SECRET = os.environ['ACCESS_TOKEN_SECRET']
 
 SCRIPT_NAME = os.path.basename(__file__)
 TWEETS_LIMIT = 5

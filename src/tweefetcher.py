@@ -36,6 +36,9 @@ def fetch_tweets(username, limit=TWEETS_LIMIT):
 
 
 def print_tweet(tweet, print_details=False):
+    """
+    Prints a given tweet in a short or in a detailed format, depending on print_details parameter value
+    """
     if print_details:
         for key in tweet._json.keys():
             print(f'{key} : {tweet._json[key]}')
@@ -45,11 +48,17 @@ def print_tweet(tweet, print_details=False):
 
 
 def print_tweets(tweets, print_details=False):
+    """
+    Prints a set of tweet in a short or in a detailed format, depending on print_details parameter value
+    """
     for tweet in tweets:
         print_tweet(tweet, print_details)
 
 
 def get_arguments():
+    """
+    Parses command line arguments of tweefetcher and returns the results as an object
+    """
     arg_parser = argparse.ArgumentParser(description='Fetches tweets for a specified user from the Twitter API, '
                                                      'stores them in local database and provides the possibility '
                                                      'to display them later along with some basic statistics')
@@ -61,7 +70,20 @@ def get_arguments():
 
     return arg_parser.parse_args()
 
+
 def main():
+    """
+    Depending on the action required by the user (via command line parameters) does one of the following:
+     - action = 'fetch'
+         Fetches the last tweets of the specified user (the number of tweets can be set by the parameter, default is 5)
+         Stores the results in the local database (tweets and user data)
+     - action = 'get'
+         Gets the tweets of the specified user from the local database
+         and displays them in a short or in a detailed format
+     - action = 'stats'
+         Displays a few statistical values for a specified users
+         e.g. total number of tweets in the database, shares of re-tweets and citations, etc
+    """
     args = get_arguments()
 
     if args.action == 'fetch':

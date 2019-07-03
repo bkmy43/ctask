@@ -3,12 +3,12 @@
 import tweepy
 import argparse
 
-import settings as s
-import database as d
+import settings
+import database
 
 
-def init_tweeter_api(key=s.CONSUMER_KEY, secret=s.CONSUMER_SECRET,
-                     token_key=s.ACCESS_TOKEN_KEY, token_secret=s.ACCESS_TOKEN_SECRET):
+def init_tweeter_api(key=settings.CONSUMER_KEY, secret=settings.CONSUMER_SECRET,
+                     token_key=settings.ACCESS_TOKEN_KEY, token_secret=settings.ACCESS_TOKEN_SECRET):
     """
     Creates a connection to the Twitter API and returns it as an object
     """
@@ -17,7 +17,7 @@ def init_tweeter_api(key=s.CONSUMER_KEY, secret=s.CONSUMER_SECRET,
     return tweepy.API(auth)
 
 
-def fetch_tweets(username, limit=s.DEFAULT_TWEETS_LIMIT, api=None):
+def fetch_tweets(username, limit=settings.DEFAULT_TWEETS_LIMIT, api=None):
     """
     Fetches a set of tweets for the given user from Twitter API
     """
@@ -54,11 +54,11 @@ def get_arguments():
     arg_parser = argparse.ArgumentParser(description='Fetches tweets for a specified user from the Twitter API, '
                                                      'stores them in local database and provides the possibility '
                                                      'to display them later along with some basic statistics')
-    arg_parser.add_argument('-v', '--version', action='version', version=f'{s.SCRIPT_NAME} v.{s.VERSION} {s.BUILD_DATE}')
+    arg_parser.add_argument('-v', '--version', action='version', version=f'{settings.SCRIPT_NAME} v.{settings.VERSION} {settings.BUILD_DATE}')
     arg_parser.add_argument('-a', '--action', action='store', help='Action to do: fetch/get/stats')
     arg_parser.add_argument('-u', '--username', action='store', help='Username to get the tweets for')
     arg_parser.add_argument('-l', '--limit', action='store',
-                            help=f'Limit for the number of tweets ({s.DEFAULT_TWEETS_LIMIT} by default')
+                            help=f'Limit for the number of tweets ({settings.DEFAULT_TWEETS_LIMIT} by default')
 
     return arg_parser.parse_args()
 
@@ -78,17 +78,17 @@ def main():
     """
     args = get_arguments()
 
-    if args.action == 'fetch':
-        print(f'Fetching the last {args.limit} tweets for the user {args.username} from Twitter API')
-        print_tweets(fetch_tweets(args.username, args.limit), print_details=False)
-    elif args.action == 'get':
+    if argsettings.action == 'fetch':
+        print(f'Fetching the last {argsettings.limit} tweets for the user {argsettings.username} from Twitter API')
+        print_tweets(fetch_tweets(argsettings.username, argsettings.limit), print_details=False)
+    elif argsettings.action == 'get':
         pass
-    elif args.action == 'stats':
+    elif argsettings.action == 'stats':
         pass
     else:
-        print(f'ERROR: No valid action specified, please run "{s.SCRIPT_NAME} -h" for help')
+        print(f'ERROR: No valid action specified, please run "{settings.SCRIPT_NAME} -h" for help')
 
 
 if __name__ == "__main__":
-    print(d.db)
+    print(databasedb)
     main()

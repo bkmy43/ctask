@@ -1,26 +1,20 @@
-from orator import DatabaseManager, Model, Schema
-import settings as s
+from sqlalchemy import *
+import settings
 
+metadata = MetaData()
 
-db = DatabaseManager(s.db_config)
-schema = Schema(db)
+tweeter_user = Table('tweeter_user', metadata,
+    Column('id_str', String(20), comment='user id (str)', primary_key=True),
+    Column('name', String(50), comment='user name', nullable=False),
+    Column('screen_name', String(15), comment='user screen name', nullable=False),
+    Column('location', String(), comment='user location'),
+    Column('description', String(), comment='user description of the account'),
+    Column('followers_count', BigInteger(), comment='number of followers'),
+    Column('friends_count', BigInteger(), comment='number of friends'),
+    Column('favourites_count', BigInteger(), comment='number of tweets this user has liked (lifetime)'),
+    Column('statuses_count', BigInteger(), comment='number of tweets (incl re-tweets) this user has posted (lifetime)'),
+    Column('created_at', DateTime(), comment='user creation timestamp')
+)
 
-
-def create_tables():
-    with schema.create('user') as table:
-        table.char('id_str', 20)                # user id (str)
-        table.char('name', 50)                  # user name
-        table.char('screen_name', 15)           # user screen name
-        table.char('location')                  # user location
-        table.char('description')               # user description of the account
-        table.big_integer('followers_count')    # number of followers
-        table.big_integer('friends_count')      # number of friends
-        table.big_integer('favourites_count')   # number of tweets this user has liked (lifetime)
-        table.big_integer('statuses_count')     # number of tweets (incl re-tweets) this user has posted (lifetime)
-        table.datetime('created_at')            # user creation timestamp
-
-
-# Model.set_connection_resolver(db)
-# create_tables()
 
 

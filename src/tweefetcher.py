@@ -1,36 +1,25 @@
-#!../.venv/bin/python
+#!.venv/bin/python
 
 import tweepy
 import argparse
-import os
-print()
+import settings as s
 
-CONSUMER_KEY = os.environ['CONSUMER_KEY']
-CONSUMER_SECRET = os.environ['CONSUMER_SECRET']
-ACCESS_TOKEN_KEY = os.environ['ACCESS_TOKEN_KEY']
-ACCESS_TOKEN_SECRET = os.environ['ACCESS_TOKEN_SECRET']
-
-SCRIPT_NAME = os.path.basename(__file__)
-TWEETS_LIMIT = 5
-VERSION = '1.0'
-BUILD_DATE = '03.07.2019'
-
-
-def init_tweeter_api(key=CONSUMER_KEY, secret=CONSUMER_SECRET,
-                     token_key=ACCESS_TOKEN_KEY, token_secret=ACCESS_TOKEN_SECRET):
+def init_tweeter_api(key=s.CONSUMER_KEY, secret=s.CONSUMER_SECRET,
+                     token_key=s.ACCESS_TOKEN_KEY, token_secret=s.ACCESS_TOKEN_SECRET):
     """
     Creates a connection to the Twitter API and returns it as an object
     """
-    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-    auth.set_access_token(ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET)
+    auth = tweepy.OAuthHandler(key, secret)
+    auth.set_access_token(token_key, token_secret)
     return tweepy.API(auth)
 
 
-def fetch_tweets(username, limit=TWEETS_LIMIT):
+def fetch_tweets(username, limit=s.DEFAULT_TWEETS_LIMIT, api=None):
     """
     Fetches a set of tweets for the given user from Twitter API
     """
-    api = init_tweeter_api()
+    if not api:
+        api = init_tweeter_api()
     tweets = api.user_timeline(screen_name=username, count=limit)
     return tweets
 
@@ -62,11 +51,11 @@ def get_arguments():
     arg_parser = argparse.ArgumentParser(description='Fetches tweets for a specified user from the Twitter API, '
                                                      'stores them in local database and provides the possibility '
                                                      'to display them later along with some basic statistics')
-    arg_parser.add_argument('-v', '--version', action='version', version=f'{SCRIPT_NAME} v.{VERSION} {BUILD_DATE}')
+    arg_parser.add_argument('-v', '--version', action='version', version=f'{s.SCRIPT_NAME} v.{s.VERSION} {s.BUILD_DATE}')
     arg_parser.add_argument('-a', '--action', action='store', help='Action to do: fetch/get/stats')
     arg_parser.add_argument('-u', '--username', action='store', help='Username to get the tweets for')
     arg_parser.add_argument('-l', '--limit', action='store',
-                            help=f'Limit for the number of tweets ({TWEETS_LIMIT} by default')
+                            help=f'Limit for the number of tweets ({s.DEFAULT_TWEETS_LIMIT} by default')
 
     return arg_parser.parse_args()
 
@@ -94,7 +83,7 @@ def main():
     elif args.action == 'stats':
         pass
     else:
-        print(f'ERROR: No valid action specified, please run "{SCRIPT_NAME} -h" for help')
+        print(f'ERROR: No valid action specified, please run "{s.SCRIPT_NAME} -h" for help')
 
 
 if __name__ == "__main__":

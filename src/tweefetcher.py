@@ -2,7 +2,9 @@
 
 import tweepy
 import argparse
+
 import settings as s
+import database as d
 
 def init_tweeter_api(key=s.CONSUMER_KEY, secret=s.CONSUMER_SECRET,
                      token_key=s.ACCESS_TOKEN_KEY, token_secret=s.ACCESS_TOKEN_SECRET):
@@ -77,7 +79,7 @@ def main():
 
     if args.action == 'fetch':
         print(f'Fetching the last {args.limit} tweets for the user {args.username} from Twitter API')
-        print_tweets(fetch_tweets(args.username, args.limit), print_details=True)
+        print_tweets(fetch_tweets(args.username, args.limit), print_details=False)
     elif args.action == 'get':
         pass
     elif args.action == 'stats':
@@ -87,4 +89,5 @@ def main():
 
 
 if __name__ == "__main__":
+    print(d.db)
     main()

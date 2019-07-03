@@ -1,6 +1,5 @@
 tweepy>=3.7.0
-django>=2.2.3
 pytz>=2019.1
 sqlparse>=0.3.0
-
-
+orator>=0.9.8
+psycopg2>=2.8.3

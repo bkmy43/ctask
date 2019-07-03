@@ -14,6 +14,7 @@ pip install -r requirements.txt
 docker pull postgres
 mkdir -p $HOME/docker/volumes/postgres
 sudo docker run --rm   --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data  postgres
+bash init_database.sh
 ```
 ### set environment variables
 ```shellscript
@@ -24,6 +25,7 @@ export ACCESS_TOKEN_SECRET='... your access token secret ...'
 
 export PG_HOST='localhost'
 export PG_PORT='5432'
+export PG_DATABASE='tweefetcher_db'
 export PG_USER='postgres'
 export PG_PASSWORD='docker'
 ```

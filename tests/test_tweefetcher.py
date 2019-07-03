@@ -6,7 +6,6 @@ from tweefetcher import fetch_tweets
 # sys.path.append(f'{os.path.dirname(os.path.abspath(__file__))}/../src/')
 import settings as s
 
-
 class TestTweefetcher(unittest.TestCase):
     def test_tweet_fetching(self, user=s.DEFAULT_TEST_USER):
         """

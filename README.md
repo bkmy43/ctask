@@ -8,6 +8,18 @@ basic statistics
 pip install -r requirements.txt
 ```
 
+# Environment
+```shellscript
+export CONSUMER_KEY='... your consumer key ...'
+export CONSUMER_SECRET='... your consumer secret ...'
+export ACCESS_TOKEN_KEY='... your access token key ...'
+export ACCESS_TOKEN_SECRET='... your access token secret ...'
+
+export PG_HOST = '...'
+export PG_PORT = '...'
+export PG_USER = '...'
+export PG_PASSWORD = '...'
+```
 # Usage
 ```
 tweefetcher.py [-h] [-v] [-a ACTION] [-u USERNAME] [-l LIMIT]

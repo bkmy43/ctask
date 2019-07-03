@@ -4,21 +4,28 @@ database and provides the possibility to display them later along with some
 basic statistics
 
 # Installation
-```
+### install pyton dependencies
+```shellscript
 pip install -r requirements.txt
 ```
 
-# Environment
+### setup local postgres database with docker
+```shellscript
+docker pull postgres
+mkdir -p $HOME/docker/volumes/postgres
+sudo docker run --rm   --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data  postgres
+```
+### set environment variables
 ```shellscript
 export CONSUMER_KEY='... your consumer key ...'
 export CONSUMER_SECRET='... your consumer secret ...'
 export ACCESS_TOKEN_KEY='... your access token key ...'
 export ACCESS_TOKEN_SECRET='... your access token secret ...'
 
-export PG_HOST='...'
-export PG_PORT='...'
-export PG_USER='...'
-export PG_PASSWORD='...'
+export PG_HOST='localhost'
+export PG_PORT='5432'
+export PG_USER='postgres'
+export PG_PASSWORD='docker'
 ```
 # Usage
 ```

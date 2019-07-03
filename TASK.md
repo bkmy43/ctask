@@ -1,4 +1,4 @@
-#Welcome to the Data Engineering challenge.
+# Data Engineering challenge.
 
 As a data engineer, it's often the case that data lies distributed all over the ecosystem of the organization.
 In our case we get data from different APIs as well as Sales systems (like Salesforce) or other SAAS tools
@@ -34,11 +34,13 @@ Here are some twitter credentials to get you started:
 
 Twitter consumer key
   `t8bhToaY4LevkBjvS355A9pfu`
+
 Twitter consumer secret
   `2315cTZYr7OQmoDytBWpuothCAakOYER7pE6fF3ZLUXeAC8rkz`
 
 Twitter access token
   `882165583911038976-XgiJxECv0cCsg2Ech6HmzPuzsD1zILp`
+
 Twitter access token secret
   `e9puaP5NBK0JWjEUXCE214yc2CXpkgC1zPMzmgDs5ZLc5`
 

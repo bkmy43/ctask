@@ -7,14 +7,17 @@ basic statistics
 pip install -r requirements.txt
 
 # Usage
+```shellscript
 tweefetcher.py [-h] [-v] [-a ACTION] [-u USERNAME] [-l LIMIT]
 
 optional arguments:
+
   -h, --help            show this help message and exit
   -v, --version         show program's version number and exit
   -a ACTION, --action ACTION
-                        Action to do: fetch/get/stats
+                          Action to do: fetch/get/stats
   -u USERNAME, --username USERNAME
-                        Username to get the tweets for
+                          Username to get the tweets for
   -l LIMIT, --limit LIMIT
-                        Limit for the number of tweets (5 by default)
+                          Limit for the number of tweets (5 by default)
+```

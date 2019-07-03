@@ -1,3 +1,5 @@
+#!.venv/bin/python
+
 import tweepy
 import argparse
 

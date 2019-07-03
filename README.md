@@ -1,1 +1,1 @@
-# ctask
+pip install -r requirements.txt

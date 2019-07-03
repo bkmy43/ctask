@@ -39,6 +39,7 @@ def print_tweet(tweet, print_details=False):
     if print_details:
         for key in tweet._json.keys():
             print(f'{key} : {tweet._json[key]}')
+        print('\n')
     else:
         print(f'{tweet.created_at}: {tweet.text}')
 
@@ -65,7 +66,7 @@ def main():
 
     if args.action == 'fetch':
         print(f'Fetching the last {args.limit} tweets for the user {args.username} from Twitter API')
-        print_tweets(fetch_tweets(args.username, args.limit), print_details=False)
+        print_tweets(fetch_tweets(args.username, args.limit), print_details=True)
     elif args.action == 'get':
         pass
     elif args.action == 'stats':

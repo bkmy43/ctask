@@ -1,2 +1,6 @@
-tweepy==3.7.0
+tweepy>=3.7.0
+django>=2.2.3
+pytz>=2019.1
+sqlparse>=0.3.0
+
 

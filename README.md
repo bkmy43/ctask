@@ -4,10 +4,12 @@ database and provides the possibility to display them later along with some
 basic statistics
 
 # Installation
+```
 pip install -r requirements.txt
+```
 
 # Usage
-```shellscript
+```
 tweefetcher.py [-h] [-v] [-a ACTION] [-u USERNAME] [-l LIMIT]
 
 optional arguments:

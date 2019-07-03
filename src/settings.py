@@ -21,3 +21,15 @@ BUILD_DATE = '03.07.2019'
 # default parameters
 DEFAULT_TWEETS_LIMIT = 5
 DEFAULT_TEST_USER = 'navalny'  # Navalny is a Russian political activist who is very active in tweeter
+
+# orator db config
+db_config = {
+    'pg-docker': {
+        'driver': 'postgres',
+        'host': PG_HOST,
+        'port': PG_PORT,
+        'database': PG_DATABASE,
+        'user': PG_USER,
+        'password': PG_USER
+    }
+}

@@ -6,6 +6,7 @@ import argparse
 import settings as s
 import database as d
 
+
 def init_tweeter_api(key=s.CONSUMER_KEY, secret=s.CONSUMER_SECRET,
                      token_key=s.ACCESS_TOKEN_KEY, token_secret=s.ACCESS_TOKEN_SECRET):
     """

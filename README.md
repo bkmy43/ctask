@@ -1,12 +1,12 @@
-# description
+# Description
 Fetches tweets for a specified user from the Twitter API, stores them in local
 database and provides the possibility to display them later along with some
 basic statistics
 
-# installation
+# Installation
 pip install -r requirements.txt
 
-# usage
+# Usage
 tweefetcher.py [-h] [-v] [-a ACTION] [-u USERNAME] [-l LIMIT]
 
 optional arguments:

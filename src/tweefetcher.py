@@ -66,7 +66,7 @@ def save_tweet(tweet, db_session=None):
     if not db_session:
         db_session = init_db_session()
 
-    db_session.merge(tweet) 
+    db_session.merge(tweet)
     db_session.commit()
 
 

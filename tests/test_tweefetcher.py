@@ -1,28 +1,35 @@
-import unittest
 import random
 import sys
+import os
+
+myPath = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(myPath + '/../src')
+
 from tweefetcher import fetch_tweets
+from settings import DEFAULT_TEST_USER
 
-# sys.path.append(f'{os.path.dirname(os.path.abspath(__file__))}/../src/')
-import settings as s
 
-class TestTweefetcher(unittest.TestCase):
-    def test_tweet_fetching(self, user=s.DEFAULT_TEST_USER):
+class TestTweefetcher():
+    def test_tweet_fetching(self, user=DEFAULT_TEST_USER):
         """
         Test that getting something from Twitter API works
         """
         result = fetch_tweets(user)
-        self.assertIsNotNone(result)
+        assert result
 
-    def test_tweet_fetching_limit(self, user=s.DEFAULT_TEST_USER):
+    def test_tweet_fetching_limit(self, user=DEFAULT_TEST_USER):
         """
         Test that limiting number of tweets works while getting data from Twitter API
         """
         for _ in range(3):
             limit = random.randint(3, 10)
             result = fetch_tweets(user, limit)
-            self.assertEqual(len(result), limit)
+            assert len(result) == limit
+
+    def test_tweet_saving(self):
+        pass
+
+    def test_twitter_user_saving(self):
+        pass
 
 
-if __name__ == '__main__':
-    unittest.main()

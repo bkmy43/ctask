@@ -29,6 +29,10 @@ export PG_DATABASE='tweefetcher_db'
 export PG_USER='postgres'
 export PG_PASSWORD='docker'
 ```
+# Test
+```
+python -m pytest tests
+```
 # Usage
 ```
 tweefetcher.py [-h] [-v] [-a ACTION] [-u USERNAME] [-l LIMIT]

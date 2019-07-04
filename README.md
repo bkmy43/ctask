@@ -48,3 +48,4 @@ optional arguments:
 - docker-compose
 - make some command line parameters not optional
 - add sys_created and sys_updated to all tables
+- add hash-tags and user-mentions

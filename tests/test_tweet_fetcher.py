@@ -5,7 +5,7 @@ import os
 myPath = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(myPath + '/../src')
 
-from tweet_fetcher import fetch_tweets, save_tweets, save_user, fetch_user
+from tweet_fetcher import fetch_tweets, save_tweets, save_user, fetch_user, print_tweets
 from settings import NUMBER_OF_TEST_REPETITIONS, TEST_USERS
 
 
@@ -16,6 +16,14 @@ class TestTweetfetcher():
         """
         assert fetch_tweets(username=random.choice(TEST_USERS))  # if the function returns non empty object,
                                                                  # we assume the connection to API works
+    def test_tweet_fetching_and_printing(self):
+        """
+        Test that getting something from Twitter API works
+        """
+        tweets = fetch_tweets(username=random.choice(TEST_USERS))
+        assert tweets
+        print_tweets(tweets=tweets, detailed=True)
+
 
     def test_user_fetching(self):
         """

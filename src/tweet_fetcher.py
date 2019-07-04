@@ -100,9 +100,7 @@ def save_tweet(tweet, db_session=None):
         if not db_session:
             db_session = init_db_session()
 
-        tweet_api_wrapper = data_models.TweetAPIWrapper(tweet)
-        tweet_model = data_models.TweetModel(tweet_api_wrapper)
-        db_session.merge(tweet_model)
+        db_session.merge(data_models.Tweet(tweet))
         db_session.commit()
     except Exception as e:
         raise e
@@ -129,7 +127,7 @@ def save_user(user, db_session=None):
         if not db_session:
             db_session = init_db_session()
 
-        db_session.merge(data_models.TwitterUserModel(user))
+        db_session.merge(data_models.TwitterUser(user))
         db_session.commit()
         return True
     except Exception as e:

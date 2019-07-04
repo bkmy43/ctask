@@ -2,24 +2,21 @@
 
 import tweepy
 import argparse
-
 from sqlalchemy import create_engine
-
-import settings
-import data_models
-
-import settings
-import data_models
 from sqlalchemy.orm import sessionmaker
+
+import settings
+import data_models
+
 
 """
 Creates a database session and returns it as an object
 """
 def init_db_session():
-    Session = sessionmaker(bind=create_engine(f'postgresql://{settings.PG_USER}:'
+    session = sessionmaker(bind=create_engine(f'postgresql://{settings.PG_USER}:'
                                               f'{settings.PG_PASSWORD}@{settings.PG_HOST}:'
                                               f'{settings.PG_PORT}/{settings.PG_DATABASE}'))
-    return Session()
+    return session()
     # data_models.Base.metadata.create_all(engine)
 
 def init_tweeter_api(key=settings.CONSUMER_KEY, secret=settings.CONSUMER_SECRET,
@@ -63,10 +60,13 @@ def print_tweets(tweets, print_details=False):
 
 
 def save_tweet(tweet, db_session=None):
+    """
+    Saves tweet to the database, depending on existence of the tweet id in the database, makes INSERT or UPDATE
+    """
     if not db_session:
         db_session = init_db_session()
 
-    db_session.add(tweet)
+    db_session.merge(tweet) 
     db_session.commit()
 
 

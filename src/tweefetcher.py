@@ -5,6 +5,7 @@ import argparse
 
 import settings
 import database
+import data_models
 
 
 def init_tweeter_api(key=settings.CONSUMER_KEY, secret=settings.CONSUMER_SECRET,
@@ -47,6 +48,11 @@ def print_tweets(tweets, print_details=False):
         print_tweet(tweet, print_details)
 
 
+def save_tweet(tweet, session):
+    session.add(tweet)
+    session.commit()
+
+
 def get_arguments():
     """
     Parses command line arguments of tweefetcher and returns the results as an object
@@ -81,7 +87,9 @@ def main():
 
     if args.action == 'fetch':
         print(f'Fetching the last {args.limit} tweets for the user {args.username} from Twitter API')
-        print_tweets(fetch_tweets(args.username, args.limit), print_details=False)
+        tweets = fetch_tweets(args.username, args.limit)
+        for tweet in tweets:
+            save_tweet(data_models.Tweet(tweet), database.session)
     elif args.action == 'get':
         pass
     elif args.action == 'stats':

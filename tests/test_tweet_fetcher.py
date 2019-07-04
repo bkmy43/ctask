@@ -5,11 +5,11 @@ import os
 myPath = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(myPath + '/../src')
 
-from tweefetcher import fetch_tweets
+from tweet_fetcher import fetch_tweets
 from settings import DEFAULT_TEST_USER
 
 
-class TestTweefetcher():
+class TestTweetfetcher():
     def test_tweet_fetching(self, user=DEFAULT_TEST_USER):
         """
         Test that getting something from Twitter API works

@@ -19,7 +19,7 @@ def init_db_session():
     return session()
     # data_models.Base.metadata.create_all(engine)
 
-def init_tweeter_api(key=settings.CONSUMER_KEY, secret=settings.CONSUMER_SECRET,
+def init_twitter_api(key=settings.CONSUMER_KEY, secret=settings.CONSUMER_SECRET,
                      token_key=settings.ACCESS_TOKEN_KEY, token_secret=settings.ACCESS_TOKEN_SECRET):
     """
     Creates a connection to the Twitter API and returns it as an object
@@ -34,7 +34,7 @@ def fetch_tweets(username, limit=settings.DEFAULT_TWEETS_LIMIT, api=None):
     Fetches a set of tweets for the given user from Twitter API
     """
     if not api:
-        api = init_tweeter_api()
+        api = init_twitter_api()
     tweets = api.user_timeline(screen_name=username, count=limit)
     return tweets
 
@@ -72,7 +72,7 @@ def save_tweet(tweet, db_session=None):
 
 def get_arguments():
     """
-    Parses command line arguments of tweefetcher and returns the results as an object
+    Parses command line arguments of tweet_fetcher and returns the results as an object
     """
     arg_parser = argparse.ArgumentParser(description='Fetches tweets for a specified user from the Twitter API, '
                                                      'stores them in local database and provides the possibility '

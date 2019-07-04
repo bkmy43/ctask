@@ -4,8 +4,8 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 
-class TweeterUser(Base):
-    __tablename__ = 'tweeter_user'
+class TwitterUser(Base):
+    __tablename__ = 'twitter_user'
 
     id_str = Column('id_str', String(20), comment='user id (str)', primary_key=True)
     name = Column('name', String(50), comment='user name', nullable=False)
@@ -19,12 +19,12 @@ class TweeterUser(Base):
     created_at = Column('created_at', DateTime(), comment='user creation timestamp')
 
     def __init__(self, tweepy_user):
-        for field in dir(TweeterUser):
+        for field in dir(TwitterUser):
             if not field.startswith('_') and field != 'metadata':
                 setattr(self, field, getattr(tweepy_user, field))
 
     def __repr__(self):
-        return '\n'.join(f'{field} = {getattr(self, field)}' for field in dir(TweeterUser)
+        return '\n'.join(f'{field} = {getattr(self, field)}' for field in dir(TwitterUser)
                          if not field.startswith('_') and field != 'metadata')
 
 

@@ -1,7 +1,7 @@
-drop database if exists tweefetcher_db;
-create database tweefetcher_db;
+drop database if exists tweet_fetcher_db;
+create database tweet_fetcher_db;
 
-drop user if exists tweefetcher;
-create user tweefetcher with encrypted password 'tweefetcher';
+drop user if exists tweet_fetcher;
+create user tweet_fetcher with encrypted password 'tweet_fetcher';
 
-grant all privileges on database tweefetcher_db to tweefetcher;
+grant all privileges on database tweet_fetcher_db to tweet_fetcher;

@@ -53,3 +53,4 @@ class Tweet(Base):
                          if not field.startswith('_') and field != 'metadata')
 
 
+

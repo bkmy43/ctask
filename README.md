@@ -31,7 +31,7 @@ export PG_PASSWORD='docker'
 ```
 # Test
 ```
-python -m pytest tests
+pytest tests --capture=no
 ```
 # Usage
 ```

@@ -13,11 +13,12 @@ import data_models
 Creates a database session and returns it as an object
 """
 def init_db_session():
-    session = sessionmaker(bind=create_engine(f'postgresql://{settings.PG_USER}:'
-                                              f'{settings.PG_PASSWORD}@{settings.PG_HOST}:'
-                                              f'{settings.PG_PORT}/{settings.PG_DATABASE}'))
+    engine = create_engine(f'postgresql://{settings.PG_USER}:'
+                           f'{settings.PG_PASSWORD}@{settings.PG_HOST}:'
+                           f'{settings.PG_PORT}/{settings.PG_DATABASE}')
+    data_models.Base.metadata.create_all(engine)
+    session = sessionmaker(bind=engine)
     return session()
-    # data_models.Base.metadata.create_all(engine)
 
 def init_twitter_api(key=settings.CONSUMER_KEY, secret=settings.CONSUMER_SECRET,
                      token_key=settings.ACCESS_TOKEN_KEY, token_secret=settings.ACCESS_TOKEN_SECRET):
@@ -63,11 +64,15 @@ def save_tweet(tweet, db_session=None):
     """
     Saves tweet to the database, depending on existence of the tweet id in the database, makes INSERT or UPDATE
     """
-    if not db_session:
-        db_session = init_db_session()
+    try:
+        if not db_session:
+            db_session = init_db_session()
 
-    db_session.merge(tweet)
-    db_session.commit()
+        db_session.merge(data_models.Tweet(tweet))
+        db_session.commit()
+        return True
+    except:
+        return False
 
 
 def get_arguments():
@@ -106,7 +111,7 @@ def main():
         print(f'Fetching the last {args.limit} tweets for the user {args.username} from Twitter API')
         tweets = fetch_tweets(args.username, args.limit)
         for tweet in tweets:
-            save_tweet(data_models.Tweet(tweet))
+            save_tweet(tweet)
     elif args.action == 'get':
         pass
     elif args.action == 'stats':

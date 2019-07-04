@@ -21,4 +21,5 @@ BUILD_DATE = '03.07.2019'
 # default parameters
 DEFAULT_TWEETS_LIMIT = 5
 DEFAULT_TEST_USER = 'navalny'  # Navalny is a Russian political activist who is very active in tweeter
+DEFAULT_NUMBER_OF_TWEETS_FOR_TESTS = 3
 

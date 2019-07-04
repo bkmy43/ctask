@@ -48,3 +48,7 @@ optional arguments:
   -l LIMIT, --limit LIMIT
                           Limit for the number of tweets (5 by default)
 ```
+# Next Steps and TODOs
+- split user attributes, move counts to separate immutable table with last_updated timestamp
+- add mockups to tests
+- docker-compose

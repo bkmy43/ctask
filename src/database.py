@@ -1,16 +1,3 @@
-from sqlalchemy import *
-
-import settings
-import data_models
-from sqlalchemy.orm import sessionmaker
-
-engine = create_engine(f'postgresql://{settings.PG_USER}:{settings.PG_PASSWORD}@{settings.PG_HOST}:'
-                       f'{settings.PG_PORT}/{settings.PG_DATABASE}')
-
-Session = sessionmaker(bind=engine)
-session = Session()
-
-data_models.Base.metadata.create_all(engine)
 
 # test_user = data_models.TweeterUser(
 #     id_str = '33aaaa',

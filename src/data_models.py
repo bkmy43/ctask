@@ -18,10 +18,13 @@ class TweeterUser(Base):
     created_at = Column('created_at', DateTime(), comment='user creation timestamp')
 
     def __init__(self, tweepy_user):
-        print(tweepy_user)
+        for field in dir(TweeterUser):
+            if not field.startswith('_') and field != 'metadata':
+                setattr(self, field, getattr(tweepy_user, field))
 
-    # def __repr__(self):
-    #     return "<User(name='%s', fullname='%s', nickname='%s')>" % (self.name, self.fullname, self.nickname)
+    def __repr__(self):
+        return '\n'.join(f'{field} = {getattr(self, field)}' for field in dir(TweeterUser)
+                         if not field.startswith('_') and field != 'metadata')
 
 
 class Tweet(Base):
@@ -45,11 +48,7 @@ class Tweet(Base):
                 setattr(self, field, getattr(tweepy_tweet, field))
 
     def __repr__(self):
-        repr = ''
-        for field in dir(Tweet):
-            if not field.statrswith('_') and field != 'metadata':
-                repr += f'{field}={getattr(self,field)}\n'
-        return repr
-
+        return '\n'.join(f'{field} = {getattr(self, field)}' for field in dir(Tweet)
+                         if not field.startswith('_') and field != 'metadata')
 
 

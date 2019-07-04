@@ -3,10 +3,24 @@
 import tweepy
 import argparse
 
+from sqlalchemy import create_engine
+
 import settings
-import database
 import data_models
 
+import settings
+import data_models
+from sqlalchemy.orm import sessionmaker
+
+"""
+Creates a database session and returns it as an object
+"""
+def init_db_session():
+    Session = sessionmaker(bind=create_engine(f'postgresql://{settings.PG_USER}:'
+                                              f'{settings.PG_PASSWORD}@{settings.PG_HOST}:'
+                                              f'{settings.PG_PORT}/{settings.PG_DATABASE}'))
+    return Session()
+    # data_models.Base.metadata.create_all(engine)
 
 def init_tweeter_api(key=settings.CONSUMER_KEY, secret=settings.CONSUMER_SECRET,
                      token_key=settings.ACCESS_TOKEN_KEY, token_secret=settings.ACCESS_TOKEN_SECRET):
@@ -48,9 +62,12 @@ def print_tweets(tweets, print_details=False):
         print_tweet(tweet, print_details)
 
 
-def save_tweet(tweet, session):
-    session.add(tweet)
-    session.commit()
+def save_tweet(tweet, db_session=None):
+    if not db_session:
+        db_session = init_db_session()
+
+    db_session.add(tweet)
+    db_session.commit()
 
 
 def get_arguments():
@@ -89,7 +106,7 @@ def main():
         print(f'Fetching the last {args.limit} tweets for the user {args.username} from Twitter API')
         tweets = fetch_tweets(args.username, args.limit)
         for tweet in tweets:
-            save_tweet(data_models.Tweet(tweet), database.session)
+            save_tweet(data_models.Tweet(tweet))
     elif args.action == 'get':
         pass
     elif args.action == 'stats':

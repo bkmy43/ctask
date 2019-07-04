@@ -54,7 +54,8 @@ def get_arguments():
     arg_parser = argparse.ArgumentParser(description='Fetches tweets for a specified user from the Twitter API, '
                                                      'stores them in local database and provides the possibility '
                                                      'to display them later along with some basic statistics')
-    arg_parser.add_argument('-v', '--version', action='version', version=f'{settings.SCRIPT_NAME} v.{settings.VERSION} {settings.BUILD_DATE}')
+    arg_parser.add_argument('-v', '--version', action='version', version=f'{settings.SCRIPT_NAME} '
+                                                                         f'v.{settings.VERSION} {settings.BUILD_DATE}')
     arg_parser.add_argument('-a', '--action', action='store', help='Action to do: fetch/get/stats')
     arg_parser.add_argument('-u', '--username', action='store', help='Username to get the tweets for')
     arg_parser.add_argument('-l', '--limit', action='store',
@@ -78,17 +79,16 @@ def main():
     """
     args = get_arguments()
 
-    if argsettings.action == 'fetch':
-        print(f'Fetching the last {argsettings.limit} tweets for the user {argsettings.username} from Twitter API')
-        print_tweets(fetch_tweets(argsettings.username, argsettings.limit), print_details=False)
-    elif argsettings.action == 'get':
+    if args.action == 'fetch':
+        print(f'Fetching the last {args.limit} tweets for the user {args.username} from Twitter API')
+        print_tweets(fetch_tweets(args.username, args.limit), print_details=False)
+    elif args.action == 'get':
         pass
-    elif argsettings.action == 'stats':
+    elif args.action == 'stats':
         pass
     else:
         print(f'ERROR: No valid action specified, please run "{settings.SCRIPT_NAME} -h" for help')
 
 
 if __name__ == "__main__":
-    print(databasedb)
     main()

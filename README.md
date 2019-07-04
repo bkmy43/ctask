@@ -25,6 +25,9 @@ export ACCESS_TOKEN_SECRET='... your access token secret ...'
 ```
 # Test
 ```
+pytest tests
+
+#or if you prefer verbose tests
 pytest tests --capture=no
 ```
 # Usage

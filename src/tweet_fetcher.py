@@ -111,7 +111,12 @@ def save_tweets(tweets, db_session=None):
     Gets set of tweets as a parameter, executes save_tweet() for each of them
     """
     try:
+        saved_users = []
         for tweet in tweets:
+            if tweet.user.screen_name not in saved_users:
+                user = fetch_user(tweet.user.screen_name)
+                save_user(user, db_session)
+                saved_users.append(tweet.user.screen_name)
             save_tweet(tweet, db_session)
         return True
     except Exception as e:

@@ -44,7 +44,8 @@ optional arguments:
 ```
 # Next Steps and TODOs
 - split user attributes, move counts to separate immutable table with last_updated timestamp
-- add mockups to tests
+- add mockups to tests/setup test and production configurations
 - docker-compose
 - make some command line parameters not optional
 - add sys_created and sys_updated to all tables
+- add hash-tags and user-mentions

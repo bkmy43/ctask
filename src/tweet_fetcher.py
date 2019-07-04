@@ -84,12 +84,12 @@ def print_tweet(tweet, detailed=False):
         print(f'{tweet.created_at}: {tweet.text}')
 
 
-def print_tweets(tweets, print_details=False):
+def print_tweets(tweets, detailed=False):
     """
     Prints a set of tweet in a short or in a detailed format, depending on print_details parameter value
     """
     for tweet in tweets:
-        print_tweet(tweet, print_details)
+        print_tweet(tweet, detailed)
 
 
 def save_tweet(tweet, db_session=None):
@@ -134,6 +134,7 @@ def save_user(user, db_session=None):
         print(f'Something went wrong while saving users to the database...\n{e}')
         return False
 
+
 def main():
     """
     Depending on the action required by the user (via command line parameters) does one of the following:
@@ -150,10 +151,12 @@ def main():
     args = get_arguments()
 
     if args.action == 'fetch':
-        print(f'Fetching the last {args.limit} tweets for the user {args.username} from Twitter API')
+        print(f'Fetching the last {args.limit} tweets for the user {args.username} from Twitter API...')
         tweets = fetch_tweets(args.username, args.limit)
-        for tweet in tweets:
-            save_tweet(tweet)
+        print(f'{len(tweets)} tweets for the user {args.username} successfully fetched.\n'
+              f'Saving them to the database...')
+        save_tweets(tweets)
+        print(f'Done')
     elif args.action == 'get':
         pass
     elif args.action == 'stats':

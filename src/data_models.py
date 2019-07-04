@@ -3,7 +3,6 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-
 class TwitterUser(Base):
     __tablename__ = 'twitter_user'
 
@@ -36,12 +35,11 @@ class Tweet(Base):
     text = Column('text', String(), comment='tweet text', nullable=False)
     in_reply_to_status_id_str = Column('in_reply_to_status_id_str', String(20), comment='if this is a reply, contains id of the original tweet')
     in_reply_to_user_id_str = Column('in_reply_to_user_id_str', String(20), comment='if this is a reply, contains id of the original author')
-    # user_id_str = Column('user_id_str', String(20), comment='user id (str)')
-    coordinates = Column('coordinates', String(), comment='geo json with coordinates')
-    # quoted_status_id_str = Column('quoted_status_id_str', String(20), comment='if this is a quote, contains the id of the original tweet')
+    is_quote_status = Column('is_quote_status', Boolean(), comment='flags if this is a quote')
     retweet_count = Column('retweet_count', BigInteger(), comment='how many times this tweet was re-tweeted')
     favorite_count = Column('favorite_count', BigInteger(), comment='how many times this tweed was liked')
     lang = Column('lang', String(5), comment='language')
+    # user_id_str = Column('user_id_str', String(20), comment='user id (str)')
 
     def __init__(self, tweepy_tweet):
         for field in dir(Tweet):

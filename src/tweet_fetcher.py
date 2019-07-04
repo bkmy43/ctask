@@ -9,16 +9,17 @@ import settings
 import data_models
 
 
-"""
-Creates a database session and returns it as an object
-"""
 def init_db_session():
+    """
+    Creates a database session and returns it as an object
+    """
     engine = create_engine(f'postgresql://{settings.PG_USER}:'
                            f'{settings.PG_PASSWORD}@{settings.PG_HOST}:'
                            f'{settings.PG_PORT}/{settings.PG_DATABASE}')
     data_models.Base.metadata.create_all(engine)
     session = sessionmaker(bind=engine)
     return session()
+
 
 def init_twitter_api(key=settings.CONSUMER_KEY, secret=settings.CONSUMER_SECRET,
                      token_key=settings.ACCESS_TOKEN_KEY, token_secret=settings.ACCESS_TOKEN_SECRET):
@@ -28,51 +29,6 @@ def init_twitter_api(key=settings.CONSUMER_KEY, secret=settings.CONSUMER_SECRET,
     auth = tweepy.OAuthHandler(key, secret)
     auth.set_access_token(token_key, token_secret)
     return tweepy.API(auth)
-
-
-def fetch_tweets(username, limit=settings.DEFAULT_TWEETS_LIMIT, api=None):
-    """
-    Fetches a set of tweets for the given user from Twitter API
-    """
-    if not api:
-        api = init_twitter_api()
-    tweets = api.user_timeline(screen_name=username, count=limit)
-    return tweets
-
-
-def print_tweet(tweet, print_details=False):
-    """
-    Prints a given tweet in a short or in a detailed format, depending on print_details parameter value
-    """
-    if print_details:
-        for key in tweet._json.keys():
-            print(f'{key} : {tweet._json[key]}')
-        print('\n')
-    else:
-        print(f'{tweet.created_at}: {tweet.text}')
-
-
-def print_tweets(tweets, print_details=False):
-    """
-    Prints a set of tweet in a short or in a detailed format, depending on print_details parameter value
-    """
-    for tweet in tweets:
-        print_tweet(tweet, print_details)
-
-
-def save_tweet(tweet, db_session=None):
-    """
-    Saves tweet to the database, depending on existence of the tweet id in the database, makes INSERT or UPDATE
-    """
-    try:
-        if not db_session:
-            db_session = init_db_session()
-
-        db_session.merge(data_models.Tweet(tweet))
-        db_session.commit()
-        return True
-    except:
-        return False
 
 
 def get_arguments():
@@ -90,6 +46,82 @@ def get_arguments():
                             help=f'Limit for the number of tweets ({settings.DEFAULT_TWEETS_LIMIT} by default')
 
     return arg_parser.parse_args()
+
+
+def fetch_tweets(username, limit=settings.DEFAULT_TWEETS_LIMIT, api=None):
+    """
+    Fetches a set of tweets for the given user from Twitter API
+    """
+    if not api:
+        api = init_twitter_api()
+    tweets = api.user_timeline(screen_name=username, count=limit)
+    return tweets
+
+
+def print_tweet(tweet, detailed=False):
+    """
+    Prints a given tweet in a short or in a detailed format, depending on print_details parameter value
+    """
+    if detailed:
+        for key in tweet._json.keys():
+            print(f'{key} : {tweet._json[key]}')
+        print('\n')
+    else:
+        print(f'{tweet.created_at}: {tweet.text}')
+
+
+def print_tweets(tweets, print_details=False):
+    """
+    Prints a set of tweet in a short or in a detailed format, depending on print_details parameter value
+    """
+    for tweet in tweets:
+        print_tweet(tweet, print_details)
+
+
+def save_tweet(tweet, db_session=None):
+    """
+    Saves tweet to the database, depending on existence of this tweet's id in the database, makes INSERT or UPDATE
+    """
+    try:
+        if not db_session:
+            db_session = init_db_session()
+
+        db_session.merge(data_models.Tweet(tweet))
+        db_session.commit()
+        return True
+    except:
+        return False
+
+
+def save_tweets(tweets, db_session=None):
+    """
+    Gets set of tweets as a parameter, executes save_tweet() for each of them
+    """
+    for tweet in tweets:
+        save_tweet(tweet, db_session)
+
+
+def save_user(user, db_session=None):
+    """
+    Saves user to the database, depending on existence of this user's id in the database, makes INSERT or UPDATE
+    """
+    try:
+        if not db_session:
+            db_session = init_db_session()
+
+        db_session.merge(data_models.TwitterUser(user))
+        db_session.commit()
+        return True
+    except Exception as e:
+        print(f'Something went wrong while saving to the database...\n{e}')
+        return False
+
+def save_users(users, db_session=None):
+    """
+    Gets set of users as a parameter, executes save_user() for each of them
+    """
+    for user in users:
+        save_user(user, db_session)
 
 
 def main():

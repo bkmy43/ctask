@@ -22,12 +22,6 @@ export CONSUMER_KEY='... your consumer key ...'
 export CONSUMER_SECRET='... your consumer secret ...'
 export ACCESS_TOKEN_KEY='... your access token key ...'
 export ACCESS_TOKEN_SECRET='... your access token secret ...'
-
-export PG_HOST='localhost'
-export PG_PORT='5432'
-export PG_DATABASE='tweefetcher_db'
-export PG_USER='postgres'
-export PG_PASSWORD='docker'
 ```
 # Test
 ```
@@ -52,3 +46,4 @@ optional arguments:
 - split user attributes, move counts to separate immutable table with last_updated timestamp
 - add mockups to tests
 - docker-compose
+- make some parameters not optional

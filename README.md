@@ -46,4 +46,5 @@ optional arguments:
 - split user attributes, move counts to separate immutable table with last_updated timestamp
 - add mockups to tests
 - docker-compose
-- make some parameters not optional
+- make some command line parameters not optional
+- add sys_created and sys_updated to all tables

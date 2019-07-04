@@ -21,5 +21,5 @@ BUILD_DATE = '03.07.2019'
 # default parameters
 DEFAULT_TWEETS_LIMIT = 5
 TEST_USERS = ('BarackObama', 'navalny', 'ladygaga')
-NUMBER_OF_TWEETS_FOR_TESTS = 3
+NUMBER_OF_TEST_REPETITIONS = 3
 

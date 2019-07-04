@@ -58,6 +58,20 @@ def fetch_tweets(username, limit=settings.DEFAULT_TWEETS_LIMIT, api=None):
     return tweets
 
 
+def fetch_user(username, api=None):
+    """
+    Fetches a set of tweets for the given user from Twitter API
+    """
+    try:
+        if not api:
+            api = init_twitter_api()
+        user = api.get_user(screen_name=username)
+        return user
+    except Exception as e:
+        print(f'Something went wrong while fetching tweets from the API...\n{e}')
+        return None
+
+
 def print_tweet(tweet, detailed=False):
     """
     Prints a given tweet in a short or in a detailed format, depending on print_details parameter value
@@ -88,17 +102,21 @@ def save_tweet(tweet, db_session=None):
 
         db_session.merge(data_models.Tweet(tweet))
         db_session.commit()
-        return True
-    except:
-        return False
+    except Exception as e:
+        raise e
 
 
 def save_tweets(tweets, db_session=None):
     """
     Gets set of tweets as a parameter, executes save_tweet() for each of them
     """
-    for tweet in tweets:
-        save_tweet(tweet, db_session)
+    try:
+        for tweet in tweets:
+            save_tweet(tweet, db_session)
+        return True
+    except Exception as e:
+        print(f'Something went wrong while saving tweets to the database...\n{e}')
+        return False
 
 
 def save_user(user, db_session=None):
@@ -113,16 +131,8 @@ def save_user(user, db_session=None):
         db_session.commit()
         return True
     except Exception as e:
-        print(f'Something went wrong while saving to the database...\n{e}')
+        print(f'Something went wrong while saving users to the database...\n{e}')
         return False
-
-def save_users(users, db_session=None):
-    """
-    Gets set of users as a parameter, executes save_user() for each of them
-    """
-    for user in users:
-        save_user(user, db_session)
-
 
 def main():
     """

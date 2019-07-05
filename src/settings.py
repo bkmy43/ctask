@@ -14,7 +14,6 @@ PG_USER = 'tweet_fetcher'
 PG_PASSWORD = 'tweet_fetcher'
 
 # version
-SCRIPT_NAME = os.path.basename(__file__)
 VERSION = '1.0'
 BUILD_DATE = '03.07.2019'
 

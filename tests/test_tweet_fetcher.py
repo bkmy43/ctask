@@ -5,7 +5,7 @@ import os
 myPath = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(myPath + '/../src')
 
-from tweet_fetcher import fetch_tweets, save_tweets, save_user, fetch_user, print_tweets
+from tweet_fetcher import fetch_tweets, save_tweets, save_user, fetch_user, print_tweets, show_statistics
 from settings import NUMBER_OF_TEST_REPETITIONS, TEST_USERS
 
 
@@ -54,4 +54,12 @@ class TestTweetfetcher():
          """
         for _ in range(NUMBER_OF_TEST_REPETITIONS):
             assert save_user(fetch_user(username=random.choice(TEST_USERS)))
+
+    def test_show_statistics(self):
+        """
+         Test that showing user statistics works
+         """
+        assert show_statistics()
+
+
 

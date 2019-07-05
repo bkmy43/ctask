@@ -1,13 +1,16 @@
 #!.venv/bin/python
-
+import os
 import tweepy
 import argparse
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.sql import text
 
 import settings
 import data_models
+import sql_queries
 
+SCRIPT_NAME = os.path.basename(__file__)
 
 def init_db_session():
     """
@@ -38,7 +41,7 @@ def get_arguments():
     arg_parser = argparse.ArgumentParser(description='Fetches tweets for a specified user from the Twitter API, '
                                                      'stores them in local database and provides the possibility '
                                                      'to display them later along with some basic statistics')
-    arg_parser.add_argument('-v', '--version', action='version', version=f'{settings.SCRIPT_NAME} '
+    arg_parser.add_argument('-v', '--version', action='version', version=f'{SCRIPT_NAME} '
                                                                          f'v.{settings.VERSION} {settings.BUILD_DATE}')
     arg_parser.add_argument('-a', '--action', action='store', help='Action to do: fetch/get/stats')
     arg_parser.add_argument('-u', '--username', action='store', help='Username to get the tweets for')
@@ -140,6 +143,27 @@ def save_user(user, db_session=None):
         return False
 
 
+def show_statistics(db_session=None):
+    """
+    Shows basic user statistics for all users in the database
+    """
+    try:
+        if not db_session:
+            db_session = init_db_session()
+
+        stats = db_session.execute(text(sql_queries.SQL['user_statistics']))
+        column_names = stats.keys()
+        for row in stats:
+            for col_num, col_value in enumerate(row):
+                col_name = column_names[col_num]
+                sep = ':\t' if len(col_name) > 14 else ':\t\t'
+                print(f'{col_name}{sep}{col_value}')
+            print('-' * 43)
+        return True
+    except Exception as e:
+        raise e
+
+
 def main():
     """
     Depending on the action required by the user (via command line parameters) does one of the following:
@@ -162,12 +186,12 @@ def main():
               f'Saving them to the database...')
         save_tweets(tweets)
         print(f'Done')
-    elif args.action == 'get':
-        pass
+    elif args.action == 'show':
+        print('Not implemented yet')
     elif args.action == 'stats':
-        pass
+        show_statistics()
     else:
-        print(f'ERROR: No valid action specified, please run "{settings.SCRIPT_NAME} -h" for help')
+        print(f'ERROR: No valid action specified, please run "{SCRIPT_NAME} -h" for help')
 
 
 if __name__ == "__main__":

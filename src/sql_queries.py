@@ -1,3 +1,4 @@
+SQL={'user_statistics': """
 WITH tweet_stats AS
 (
   SELECT user_id_str as user_id,
@@ -25,3 +26,5 @@ GROUP BY user_id_str
          s.avg_favorite
     FROM twitter_user AS u
     JOIN tweet_stats AS s ON s.user_id = u.id_str;
+"""
+}

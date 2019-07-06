@@ -55,11 +55,11 @@ class TestTweetfetcher():
         for _ in range(NUMBER_OF_TEST_REPETITIONS):
             assert save_user(fetch_user(username=random.choice(TEST_USERS)))
 
-    def test_show_statistics(self):
-        """
-         Test that showing user statistics works
-         """
-        assert show_statistics()
-
+    # def test_show_statistics(self):
+    #     """
+    #      Test that showing user statistics works
+    #      """
+    #     assert show_statistics()
+    #
 
 

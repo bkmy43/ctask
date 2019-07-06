@@ -67,3 +67,15 @@ class Tweet(Base):
     def __repr__(self):
         return '\n'.join(f'{field} = {getattr(self, field)}' for field in dir(Tweet)
                          if not field.startswith('_') and field != 'metadata')
+
+#
+# class Follower(Base):
+#     __tablename__ = 'follower'
+#
+#     id = column('id', Integer, Sequence('follower_id_seq'))
+#     id_str = Column('text', String(20), comment='user id')
+#     follower_id_str = Column('text', String(20), comment='follower user id')
+#
+#     def __init__(self, user_id, follower_id):
+#         self.id_str = user_id
+#         self.follower_id_str = follower_id

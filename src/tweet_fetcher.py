@@ -12,6 +12,7 @@ import sql_queries
 
 SCRIPT_NAME = os.path.basename(__file__)
 
+
 def init_db_session():
     """
     Creates a database session and returns it as an object
@@ -19,7 +20,7 @@ def init_db_session():
     engine = create_engine(f'postgresql://{settings.PG_USER}:'
                            f'{settings.PG_PASSWORD}@{settings.PG_HOST}:'
                            f'{settings.PG_PORT}/{settings.PG_DATABASE}')
-    data_models.Base.metadata.create_all(engine)
+    # data_models.Base.metadata.create_all(engine)
     session = sessionmaker(bind=engine)
     return session()
 
@@ -73,6 +74,35 @@ def fetch_user(username, api=None):
     except Exception as e:
         print(f'Something went wrong while fetching tweets from the API...\n{e}')
         return None
+
+
+def fetch_followers(username, api=None):
+    """
+    """
+    try:
+        if not api:
+            api = init_twitter_api()
+        followers = api.get_followers(screen_name=username)
+
+        return followers
+    except Exception as e:
+        print(f'Something went wrong while fetching tweets from the API...\n{e}')
+        return None
+
+
+def fetch_and_save_followers(user, api, current_depth):
+    save_user(user)
+
+    if not current_depth > 100: # TODO settings.py
+        followers = fetch_followers(user, api)
+
+        for follower in followers:
+            # save_follower(user=user.id, follower=follower.id_str)
+            fetch_and_save_followers(follower, api, current_depth + 1)
+
+def save_follower(usre_id, follower_id):
+    pass
+
 
 
 def print_tweet(tweet, detailed=False):
